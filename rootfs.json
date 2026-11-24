@@ -6,10 +6,10 @@
     "description": "Minimal Void Linux ARM64 with glibc and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-114859/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-114859.tar.xz",
-    "sha256": "22537501d6adf43acacf3549c14a7a243a389e0723ab0a933cd66a0f5f215b5b",
-    "size_bytes": 64849204,
-    "version": "v20261124-114859",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-120112/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-120112.tar.xz",
+    "sha256": "b5278a11da9277c61cb188d2708b121b6fe03b6699e6724c1ca7d8bc5c018804",
+    "size_bytes": 64845356,
+    "version": "v20261124-120112",
     "build_date": "20261124"
   },
   {
@@ -19,10 +19,10 @@
     "description": "Minimal Void Linux ARM64 with musl and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-musl-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-114859/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-114859.tar.xz",
-    "sha256": "146767bca893b86494f184688f3e975a8d2432ca1b1509861a7f076cb1aca93e",
-    "size_bytes": 54350180,
-    "version": "v20261124-114859",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-120112/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-120112.tar.xz",
+    "sha256": "bc7f90797ca0c9b701bec963727e875d6dfcfd7f2720d8fa4685224e90c5b8fd",
+    "size_bytes": 54352848,
+    "version": "v20261124-120112",
     "build_date": "20261124"
   }
 ]
