@@ -70,11 +70,15 @@ RUN apk update && apk add --no-progress \
 #
 # --container keeps dinit from trying to halt/reboot the host; it stops the
 # services and exits, so the container shuts down gracefully.
+# NOTE: Chimera ships BSD sed, where "-i" takes the backup suffix as the next
+# argument. "-i.bak" works with both BSD and GNU sed, so use that and drop the
+# backup afterwards.
 RUN set -eux; \
     mv /usr/bin/init /usr/bin/dinit-init; \
     ln -s dinit-init /usr/bin/init; \
-    sed -i 's|exec "/usr/bin/dinit"|exec "/usr/bin/dinit" --container|' /usr/bin/dinit-init; \
-    grep -q -- '--container' /usr/bin/dinit-init; \
+    sed -i.bak 's|exec "/usr/bin/dinit"|exec "/usr/bin/dinit" --container|' /usr/bin/dinit-init; \
+    rm -f /usr/bin/dinit-init.bak; \
+    grep -qF -e '--container' /usr/bin/dinit-init; \
     test -L /usr/bin/init; \
     test "$(readlink /usr/bin/init)" = dinit-init
 
