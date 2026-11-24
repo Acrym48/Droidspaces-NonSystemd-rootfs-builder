@@ -6,7 +6,7 @@ them as GitHub releases, and regenerates `rootfs.json` on every release.
 
 This is a fork of the upstream builder. Upstream ships systemd-based images; this fork only
 keeps distributions that boot with their own native init. Right now that means Void Linux
-with **runit** — glibc and musl flavours, `aarch64` only.
+with **runit** and Chimera Linux with **dinit**. All templates are `aarch64`.
 
 ## Current templates
 
@@ -14,17 +14,25 @@ with **runit** — glibc and musl flavours, `aarch64` only.
 | --- | --- | --- | --- | --- |
 | `Void-Minimal-runit` | aarch64 | glibc | runit | CLI only |
 | `Void-musl-Minimal-runit` | aarch64 | musl | runit | CLI only |
+| `Chimera-Minimal-dinit` | aarch64 | musl | dinit | CLI only, FreeBSD userland |
 
-Both are bootstrapped from the official Void Linux ROOTFS tarball, updated with `xbps`,
-and include `base-system` plus a small CLI toolset (bash, curl, wget, nano, htop, sudo,
-openssh, iproute2, iputils, procps-ng, dhcpcd).
+The Void templates are bootstrapped from the official Void Linux ROOTFS tarball, updated
+with `xbps`, and include `base-system` plus a small CLI toolset (bash, curl, wget, nano,
+htop, sudo, openssh, iproute2, iputils, procps-ng, dhcpcd).
+
+The Chimera template is bootstrapped from the official Chimera `ROOTFS-*-bootstrap` tarball
+and uses `apk` with the same kind of CLI toolset. It installs `dinit-chimera-device-none`
+instead of udev, because a container has no hardware events to process.
 
 `templates/armhf`, `templates/x86` and `templates/x86_64` are empty placeholders — add a
 Dockerfile there if you want those architectures.
 
 ## Init and services (no systemd)
 
-There is no `systemctl`, no journal and no systemd units anywhere in these images.
+There is no `systemctl`, no journal and no systemd units anywhere in these images. Each
+template uses the init system the distro ships.
+
+### Void Linux (runit)
 
 - PID 1 is runit (`/sbin/init`), started from `/etc/runit/1`, `2` and `3`.
 - Service definitions live in `/etc/sv/<name>/`; a service is enabled by symlinking it into
@@ -34,12 +42,28 @@ There is no `systemctl`, no journal and no systemd units anywhere in these image
 - Do **not** replace `/var/service` in a template. On Void it is a symlink to the active
   runsvdir, and replacing it breaks service supervision.
 
+### Chimera Linux (dinit)
+
+- PID 1 is dinit. `/sbin/init` is a symlink to the `dinit-chimera` wrapper, which sets up
+  the environment and execs `/usr/bin/dinit --container`.
+- Packaged service files live in `/usr/lib/dinit.d`; local ones go in `/etc/dinit.d`.
+- Enable a service with `dinitctl enable <name>` (this creates a link in
+  `/etc/dinit.d/boot.d`), disable it with `dinitctl disable <name>`.
+- Inspect services with `dinitctl status <name>` and `dinitctl list`.
+- `--container` keeps dinit from trying to halt or reboot the host. On shutdown it stops
+  the services and exits, so Droidspaces can stop the container with plain SIGTERM.
+
+`/sbin/init` is deliberately a symlink, not the regular wrapper file: Droidspaces treats a
+regular `/sbin/init` as sysvinit and tries to talk to its initctl FIFO, which Chimera does
+not have. As a symlink it is classified as an unknown init and stopped with SIGTERM.
+
 ### Networking
 
-The templates add a `ds-dhcp` runit service. It starts `dhcpcd -B` only when the container
-has its own network namespace (`net_mode` in `/run/droidspaces/container.config` is not
-`host` or `none`). In `host`/`none` mode it idles, so `runsv` does not respawn it in a loop
-and the phone's real interfaces are left alone.
+The templates add a `ds-dhcp` service (runit on Void, dinit on Chimera). It starts
+`dhcpcd -B` only when the container has its own network namespace (`net_mode` in
+`/run/droidspaces/container.config` is not `host` or `none`). In `host`/`none` mode it
+idles, so the supervisor does not respawn it in a loop and the phone's real interfaces are
+left alone.
 
 The templates also create the Android networking groups (`aid_inet` 3003, `aid_net_raw`
 3004, `aid_net_admin` 3005) and add `root` to `aid_inet` and `aid_net_raw`, which is what
@@ -84,8 +108,11 @@ Build context is the repo root, so `COPY scripts/...` works from any template.
 
 For this fork, a new template must also:
 
-- install an init that works as PID 1 without systemd (runit, OpenRC, s6, etc.);
+- install an init that works as PID 1 without systemd (runit, dinit, OpenRC, s6, etc.);
 - keep `/sbin/init` pointing at it;
+- make sure Droidspaces can stop it gracefully: a regular `/sbin/init` file is treated as
+  sysvinit, a symlink is treated as an unknown init and gets SIGTERM (see the Chimera
+  template);
 - enable services through the distro's own mechanism, not by calling `systemctl`;
 - create the `aid_inet` / `aid_net_raw` groups and add `root` to them.
 
@@ -104,6 +131,7 @@ for that arch.
 
 ```sh
 ./build.sh -a aarch64 -i Void-Minimal-runit
+./build.sh -a aarch64 -i Chimera-Minimal-dinit
 ```
 
 Needs docker with buildx, jq, and xz. QEMU is registered automatically when the host cannot
