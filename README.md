@@ -1,7 +1,49 @@
-# Droidspaces RootFS Builder
+# Droidspaces Non-systemd RootFS Builder
 
-Builds rootfs tarballs for [Droidspaces](https://github.com/ravindu644/Droidspaces-OSS) from Dockerfiles,
-publishes them as GitHub releases, and regenerates `rootfs.json` on every release.
+Builds **systemd-free** rootfs tarballs for
+[Droidspaces](https://github.com/ravindu644/Droidspaces-OSS) from Dockerfiles, publishes
+them as GitHub releases, and regenerates `rootfs.json` on every release.
+
+This is a fork of the upstream builder. Upstream ships systemd-based images; this fork only
+keeps distributions that boot with their own native init. Right now that means Void Linux
+with **runit** — glibc and musl flavours, `aarch64` only.
+
+## Current templates
+
+| Template | Arch | Libc | Init | Notes |
+| --- | --- | --- | --- | --- |
+| `Void-Minimal-runit` | aarch64 | glibc | runit | CLI only |
+| `Void-musl-Minimal-runit` | aarch64 | musl | runit | CLI only |
+
+Both are bootstrapped from the official Void Linux ROOTFS tarball, updated with `xbps`,
+and include `base-system` plus a small CLI toolset (bash, curl, wget, nano, htop, sudo,
+openssh, iproute2, iputils, procps-ng, dhcpcd).
+
+`templates/armhf`, `templates/x86` and `templates/x86_64` are empty placeholders — add a
+Dockerfile there if you want those architectures.
+
+## Init and services (no systemd)
+
+There is no `systemctl`, no journal and no systemd units anywhere in these images.
+
+- PID 1 is runit (`/sbin/init`), started from `/etc/runit/1`, `2` and `3`.
+- Service definitions live in `/etc/sv/<name>/`; a service is enabled by symlinking it into
+  `/etc/runit/runsvdir/default/`.
+- Manage services with `sv status <name>`, `sv up <name>`, `sv down <name>`,
+  `sv restart <name>`.
+- Do **not** replace `/var/service` in a template. On Void it is a symlink to the active
+  runsvdir, and replacing it breaks service supervision.
+
+### Networking
+
+The templates add a `ds-dhcp` runit service. It starts `dhcpcd -B` only when the container
+has its own network namespace (`net_mode` in `/run/droidspaces/container.config` is not
+`host` or `none`). In `host`/`none` mode it idles, so `runsv` does not respawn it in a loop
+and the phone's real interfaces are left alone.
+
+The templates also create the Android networking groups (`aid_inet` 3003, `aid_net_raw`
+3004, `aid_net_admin` 3005) and add `root` to `aid_inet` and `aid_net_raw`, which is what
+gives network access on Android kernels.
 
 ## Layout
 
@@ -10,8 +52,12 @@ archs.json                  supported architectures -> docker platform + CI runn
 build.sh                    builds one template for one arch
 templates/<arch>/<Name>.Dockerfile
 scripts/generate_rootfs_json.py
+scripts/cleanup_old_assets.py
 rootfs.json                 generated, do not edit by hand
 ```
+
+`scripts/bspwm`, `scripts/xfce-start`, `scripts/bashrc.sh` and similar files are inherited
+from upstream and are not used by the current CLI-only templates.
 
 ## Adding a distro
 
@@ -21,30 +67,48 @@ The Dockerfile must end with an `export` stage carrying the metadata labels:
 
 ```dockerfile
 FROM scratch AS export
-LABEL droidspaces.name="Ubuntu 24.04 LTS - Minimal" \
-      droidspaces.distro="Ubuntu" \
-      droidspaces.description="Minimal Ubuntu 24.04 rootfs with basic packages." \
+
+LABEL droidspaces.name="Void Linux - Minimal (runit)" \
+      droidspaces.distro="Void Linux" \
+      droidspaces.description="Minimal Void Linux ARM64 with glibc and native runit init. CLI only." \
       droidspaces.author="Droidspaces developers"
+
 COPY --from=customizer / /
 ```
 
-`name`, `distro`, and `description` are required. `author` defaults to "Droidspaces developers".
-Any extra `droidspaces.<key>` label is copied into the `rootfs.json` entry as `<key>`.
+`name`, `distro`, and `description` are required. `author` defaults to "Droidspaces
+developers". Any extra `droidspaces.<key>` label is copied into the `rootfs.json` entry as
+`<key>`.
 
 Build context is the repo root, so `COPY scripts/...` works from any template.
 
+For this fork, a new template must also:
+
+- install an init that works as PID 1 without systemd (runit, OpenRC, s6, etc.);
+- keep `/sbin/init` pointing at it;
+- enable services through the distro's own mechanism, not by calling `systemctl`;
+- create the `aid_inet` / `aid_net_raw` groups and add `root` to them.
+
 ## Adding an architecture
 
-Add a key to `archs.json` and create `templates/<arch>/`.
+Add a key to `archs.json` and create `templates/<arch>/`:
+
+```json
+"x86_64": { "platform": "linux/amd64", "runner": "ubuntu-latest" }
+```
+
+`platform` is the Docker build platform, `runner` is the GitHub Actions runner label used
+for that arch.
 
 ## Building locally
 
 ```sh
-./build.sh -a aarch64 -i Ubuntu-24.04-Minimal
+./build.sh -a aarch64 -i Void-Minimal-runit
 ```
 
-Needs docker with buildx, jq, and xz. QEMU is registered automatically when the host
-cannot run the target platform natively.
+Needs docker with buildx, jq, and xz. QEMU is registered automatically when the host cannot
+run the target platform natively. The result is
+`<Name>-Droidspaces-rootfs-<arch>-<YYYYMMDD>-<version>.tar.xz`.
 
 ## Checking labels
 
@@ -52,67 +116,23 @@ cannot run the target platform natively.
 python3 scripts/generate_rootfs_json.py --lint
 ```
 
+This validates every template's `droidspaces.*` labels without touching the network or
+writing files.
+
 ## CI
 
 `.github/workflows/build-rootfs-releases.yml` runs on push to `main`, weekly, or by hand.
 It lints labels, builds every template in parallel on the runner for its arch, creates one
 release with all tarballs, then regenerates and commits `rootfs.json`. The first failed
-build cancels the rest and blocks the release. The manual "update_json_only" input regenerates `rootfs.json` from the
-current latest release without building.
+build cancels the rest and blocks the release. The manual `update_json_only` input
+regenerates `rootfs.json` from the current latest release without building.
 
-## Desktop templates and the desktop user
+`.github/workflows/cleanup-old-assets.yml` prunes old releases, tags and workflow runs on a
+weekly schedule.
 
-GUI templates (`*-XFCE`, `*-bspwm`) autostart the desktop on the Termux:X11 display and run it
-as **root** unless you name a desktop user. XFCE templates read `XFCE_USER`; bspwm templates
-read `DESKTOP_USER`. Both come from `/run/droidspaces.env`, which the host app writes at start
-(CLI: pass an env file with `droidspaces --env=PATH`).
+## About `rootfs.json`
 
-### Creating the desktop user
-
-Run these **inside the container**, as root.
-
-Debian / Ubuntu / Kali:
-
-```sh
-adduser alice                     # home, groups and password in one step
-usermod -aG sudo alice            # optional: sudo
-```
-
-Arch - `useradd` creates nothing by default, so pass all of it:
-
-```sh
-useradd -m -G wheel,aid_inet,aid_net_raw,input,video,tty alice
-passwd alice
-```
-
-`-m` creates the home, `aid_inet,aid_net_raw` give network access on Android kernels, and
-`input,video,tty` give hardware access. Skipping `-G` leaves the user with no network.
-
-Optional, for `sudo pacman -Syu` from Settings > Update packages (Power off and Restart
-already work without it):
-
-```sh
-echo '%wheel ALL=(ALL:ALL) ALL' > /etc/sudoers.d/11-wheel && chmod 440 /etc/sudoers.d/11-wheel
-```
-
-### Pointing the desktop at it
-
-Set the variable in the host app's environment settings, then restart the container:
-
-```sh
-DESKTOP_USER=alice                # bspwm templates
-XFCE_USER=alice                   # XFCE templates
-```
-
-The bspwm templates (`Ubuntu-24.04-bspwm`, `Arch-bspwm-Kernel-5.10-and-up`) are XFCE's package
-set with the desktop swapped for the bspwm tiling WM plus a touch-friendly Catppuccin theme
-(polybar bar + dock, rofi menus, PulseAudio Volume Control, dynamic desktops, drag-to-resize,
-a settings hub). The theme lives in
-`scripts/bspwm/bspwm-theme/` and is seeded three ways so **every** user gets it by default: a
-read-only master at `/usr/share/droidspaces/bspwm-theme`, a build-time copy into `/root` and
-`/etc/skel`, and a runtime seed in `bspwm-start` for any user created without skel. The same
-`scripts/bspwm/bspwm-theme` payload is published as a standalone importer for raw bspwm installs.
-
-The theme itself is init- and distro-agnostic: it picks `pacman` or `apt`, reads the top-bar
-logo from `os-release`, bundles its own fonts, and uses `poweroff`/`reboot` where there is no
-`systemctl`. The templates autostart it with a systemd unit.
+`rootfs.json` is generated from the labels in `templates/` plus the assets of the latest
+release. Do not edit it by hand — CI commits it after each release. Until this fork
+publishes its first release, the file still lists the upstream systemd images, so treat its
+contents as stale.
