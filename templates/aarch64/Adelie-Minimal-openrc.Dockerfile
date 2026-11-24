@@ -12,8 +12,8 @@ RUN apk add --no-cache curl tar xz
 
 WORKDIR /rootfs
 
-RUN curl -fL \
-    https://distfiles.adelielinux.org/adelie/1.0-beta6/iso/adelie-rootfs-mini-aarch64-1.0-beta6-20241223.txz \
+RUN curl -fL --retry 5 --retry-delay 10 --connect-timeout 30 \
+    https://adelielinux.nic.cz/adelie/1.0-beta6/iso/adelie-rootfs-mini-aarch64-1.0-beta6-20241223.txz \
     -o /tmp/adelie-rootfs.txz && \
     tar -xJpf /tmp/adelie-rootfs.txz -C /rootfs && \
     rm -f /tmp/adelie-rootfs.txz
