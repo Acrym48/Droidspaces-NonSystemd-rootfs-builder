@@ -6,7 +6,8 @@ them as GitHub releases, and regenerates `rootfs.json` on every release.
 
 This is a fork of the upstream builder. Upstream ships systemd-based images; this fork only
 keeps distributions that boot with their own native init. Right now that means Void Linux
-with **runit** and Chimera Linux with **dinit**. All templates are `aarch64`.
+with **runit**, Chimera Linux with **dinit**, and Adélie Linux with **OpenRC**. All
+templates are `aarch64`.
 
 ## Current templates
 
@@ -15,6 +16,7 @@ with **runit** and Chimera Linux with **dinit**. All templates are `aarch64`.
 | `Void-Minimal-runit` | aarch64 | glibc | runit | CLI only |
 | `Void-musl-Minimal-runit` | aarch64 | musl | runit | CLI only |
 | `Chimera-Minimal-dinit` | aarch64 | musl | dinit | CLI only, FreeBSD userland |
+| `Adelie-Minimal-openrc` | aarch64 | musl | OpenRC | CLI only |
 
 The Void templates are bootstrapped from the official Void Linux ROOTFS tarball, updated
 with `xbps`, and include `base-system` plus a small CLI toolset (bash, curl, wget, nano,
@@ -56,6 +58,20 @@ template uses the init system the distro ships.
 `/sbin/init` is deliberately a symlink, not the regular wrapper file: Droidspaces treats a
 regular `/sbin/init` as sysvinit and tries to talk to its initctl FIFO, which Chimera does
 not have. As a symlink it is classified as an unknown init and stopped with SIGTERM.
+
+### Adélie Linux (OpenRC)
+
+- PID 1 is sysvinit, which is the binary Adélie's `sysvinit` package provides. It runs
+  OpenRC through `/etc/inittab` (`/sbin/rc sysinit`, `boot`, `default`).
+- Service definitions live in `/etc/init.d`; a service is enabled with
+  `rc-update add <name> default`.
+- Manage services with `rc-service <name> start|stop|restart` and inspect them with
+  `rc-status`.
+- The template hides `/sbin/openrc` and `/bin/s6-svscan` so Droidspaces does not
+  misclassify the container as OpenRC or s6; it then uses the sysvinit initctl FIFO
+  (`/run/initctl`) for a graceful stop.
+- The `ds-dhcp` service starts `dhcpcd -B` only when `net_mode` in
+  `/run/droidspaces/container.config` is not `host` or `none`.
 
 ### Networking
 
@@ -132,6 +148,7 @@ for that arch.
 ```sh
 ./build.sh -a aarch64 -i Void-Minimal-runit
 ./build.sh -a aarch64 -i Chimera-Minimal-dinit
+./build.sh -a aarch64 -i Adelie-Minimal-openrc
 ```
 
 Needs docker with buildx, jq, and xz. QEMU is registered automatically when the host cannot
