@@ -32,6 +32,13 @@ COPY --from=bootstrap /rootfs /
 # --------------------------------------------------
 FROM base AS customizer
 
+# The mini rootfs points at distfiles.adelielinux.org, which is not reachable
+# from some build environments (e.g. GitHub Actions). Use the nic.cz mirror.
+RUN printf '%s\n' \
+    'https://adelielinux.nic.cz/adelie/current/system' \
+    'https://adelielinux.nic.cz/adelie/current/user' \
+    > /etc/apk/repositories
+
 # The mini rootfs already ships the Adélie repositories.
 RUN apk update && apk add --no-progress \
     bash \
