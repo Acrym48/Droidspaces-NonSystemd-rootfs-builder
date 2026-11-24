@@ -127,11 +127,6 @@ SERVICE
 
 ln -sf ../ds-dhcp /etc/dinit.d/boot.d/ds-dhcp
 
-# Defense in depth: only touch container veth interfaces (eth*) and never
-# Android-internal interfaces (rmnet*, dit*, epdg*, ...).
-if [ -f /etc/dhcpcd.conf ] && ! grep -qx 'allowinterfaces eth\*' /etc/dhcpcd.conf; then
-    echo 'allowinterfaces eth*' >> /etc/dhcpcd.conf
-fi
 EOF_RUN
 
 # Clean package cache
