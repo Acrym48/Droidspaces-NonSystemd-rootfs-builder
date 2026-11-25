@@ -40,7 +40,6 @@ RUN printf '%s\n' 'https://repo.chimera-linux.org/current/main' > /etc/apk/repos
 # events to process.
 RUN apk update && apk add --no-progress \
     base-files \
-    chimerautils \
     bash \
     bash-completion \
     ca-certificates \

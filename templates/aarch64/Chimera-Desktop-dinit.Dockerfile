@@ -40,9 +40,10 @@ RUN printf '%s\n' \
     > /etc/apk/repositories
 
 # Minimal CLI system + XFCE4 desktop.
-RUN apk update && apk add --no-progress \
+RUN apk update && apk upgrade && apk add --no-progress \
     base-files \
     chimerautils \
+    chimerautils-extra \
     bash \
     bash-completion \
     ca-certificates \
