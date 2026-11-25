@@ -80,7 +80,7 @@ RUN xbps-install -y \
     xfce4-notifyd \
     xorg-minimal \
     xinit \
-    x11-xserver-utils \
+    xrandr xset xrdb xsetroot \
     x11-utils \
     dbus-x11 \
     at-spi2-core \
