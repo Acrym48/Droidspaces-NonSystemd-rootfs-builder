@@ -6,10 +6,10 @@
     "description": "Ad\u00e9lie Linux ARM64 with musl libc, native OpenRC init, and XFCE4 desktop. CLI + GUI.",
     "architecture": "aarch64",
     "file": "Adelie-Desktop-openrc",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Adelie-Desktop-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "d94f924cf2130bea80d4723c5bccd28fb7b02dc43c3c0936f3bcccd6aa375047",
-    "size_bytes": 308961576,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Adelie-Desktop-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "15551c902f21276da1f0f574415e22a9221727671d14ff16ac67add500fad3f1",
+    "size_bytes": 308966296,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -19,10 +19,23 @@
     "description": "Minimal Ad\u00e9lie Linux ARM64 with musl libc and native OpenRC init. CLI only.",
     "architecture": "aarch64",
     "file": "Adelie-Minimal-openrc",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Adelie-Minimal-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "26cd37da52707c14baaae4d7ea8bd83b92c8e337dfd624e9e282f59ca6b767ef",
-    "size_bytes": 12582856,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Adelie-Minimal-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "672525b873cc0ffd19cff965b03b033abd0b40a4a1a92935190f84921397704a",
+    "size_bytes": 12579912,
+    "version": "v20261125-110723",
+    "build_date": "20261125"
+  },
+  {
+    "author": "Acrym48",
+    "name": "Alpine Linux - Desktop (OpenRC)",
+    "distro": "Alpine",
+    "description": "Alpine Linux ARM64 with musl libc, native OpenRC init, and XFCE4 desktop. CLI + GUI.",
+    "architecture": "aarch64",
+    "file": "Alpine-Desktop-openrc",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Alpine-Desktop-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "4edeb23fded23ff619874da56bf6253aef6bd93009459c48731f4de18c830fd0",
+    "size_bytes": 261035044,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -32,10 +45,10 @@
     "description": "Chimera Linux ARM64 with musl libc, native dinit init, and XFCE4 desktop. CLI + GUI.",
     "architecture": "aarch64",
     "file": "Chimera-Desktop-dinit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Chimera-Desktop-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "15e53744b95adf699a3d5f135054b3738976cea91f0cbc8c12edeabef6bb1ad6",
-    "size_bytes": 327532948,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Chimera-Desktop-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "1d51262ef85aca16cf969b6f10de4816da29266c80f9ab86faaa9f061ddd1b7e",
+    "size_bytes": 327534588,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -45,10 +58,10 @@
     "description": "Minimal Chimera Linux ARM64 with musl libc, FreeBSD userland and native dinit init. CLI only.",
     "architecture": "aarch64",
     "file": "Chimera-Minimal-dinit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Chimera-Minimal-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "8ee1ba014f7a4c0590ba3325150fe82c92b3815ffbd59ff0f1a8b67c7337ec44",
-    "size_bytes": 19509948,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Chimera-Minimal-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "dcba1a36ca521afef3565c24fd5ac1fb495a171244201f6bd3e2fb68b899133d",
+    "size_bytes": 19490128,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -58,10 +71,10 @@
     "description": "Void Linux ARM64 with glibc, native runit init, and XFCE4 desktop. CLI + GUI.",
     "architecture": "aarch64",
     "file": "Void-Desktop-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "4cf4c14eb82a0fc01c4e382dbe4f5680706156904309c47ea5c320a97940fbf6",
-    "size_bytes": 299953752,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Void-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "51db1ef3ed93a18d63cdd716cdf261700a8ba7b6cc5f7f4df7346016b85ca312",
+    "size_bytes": 299943100,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -71,10 +84,10 @@
     "description": "Minimal Void Linux ARM64 with glibc and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "ef378107e39e44b8c6314e2dd1dc8cbcd8a4c0f9aa733220774c62ed1221c71a",
-    "size_bytes": 64802512,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "23f8ca217ef41526592b602f0784429022eb3de3cfc5eebac8c2decec6282166",
+    "size_bytes": 64789860,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -84,10 +97,10 @@
     "description": "Void Linux ARM64 with musl libc, native runit init, and XFCE4 desktop. CLI + GUI.",
     "architecture": "aarch64",
     "file": "Void-musl-Desktop-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-musl-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "453c68f11592454eb69e7477791659562fe21859f4897ccaec391f7093a2dbed",
-    "size_bytes": 289859976,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Void-musl-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "0e5a46fbe03a1a9218643fd981045ba41ac7130034fa6e548c2391fa6bded02b",
+    "size_bytes": 289886712,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   },
   {
@@ -97,10 +110,10 @@
     "description": "Minimal Void Linux ARM64 with musl and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-musl-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
-    "sha256": "e5b106b5074f32e0ed566ebad0b8d8e182965b1b08f1b0e556dd0fd567726d34",
-    "size_bytes": 54292680,
-    "version": "v20261125-081235",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-110723/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-110723.tar.xz",
+    "sha256": "c16bc1941135226f28d745fc4b467f1f141d68ca8b6e1e56c102afd793f51ab4",
+    "size_bytes": 54303420,
+    "version": "v20261125-110723",
     "build_date": "20261125"
   }
 ]
