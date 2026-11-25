@@ -81,7 +81,7 @@ RUN xbps-install -y \
     xorg-minimal \
     xinit \
     xrandr xset xrdb xsetroot \
-    x11-utils \
+    xprop xdpyinfo xwininfo \
     dbus-x11 \
     at-spi2-core \
     tumbler \
