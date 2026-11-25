@@ -1,16 +1,42 @@
 [
   {
     "author": "Acrym48",
+    "name": "Ad\u00e9lie Linux - Desktop (OpenRC)",
+    "distro": "Ad\u00e9lie Linux",
+    "description": "Ad\u00e9lie Linux ARM64 with musl libc, native OpenRC init, and XFCE4 desktop. CLI + GUI.",
+    "architecture": "aarch64",
+    "file": "Adelie-Desktop-openrc",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Adelie-Desktop-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "d94f924cf2130bea80d4723c5bccd28fb7b02dc43c3c0936f3bcccd6aa375047",
+    "size_bytes": 308961576,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
+  },
+  {
+    "author": "Acrym48",
     "name": "Ad\u00e9lie Linux - Minimal (OpenRC)",
     "distro": "Ad\u00e9lie Linux",
     "description": "Minimal Ad\u00e9lie Linux ARM64 with musl libc and native OpenRC init. CLI only.",
     "architecture": "aarch64",
     "file": "Adelie-Minimal-openrc",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-222022/Adelie-Minimal-openrc-Droidspaces-rootfs-aarch64-20261124-v20261124-222022.tar.xz",
-    "sha256": "8749693a8b9e5ca89457f10ebc7f96d2a4f4035da2592864ef91f6f0afc929b5",
-    "size_bytes": 12580376,
-    "version": "v20261124-222022",
-    "build_date": "20261124"
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Adelie-Minimal-openrc-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "26cd37da52707c14baaae4d7ea8bd83b92c8e337dfd624e9e282f59ca6b767ef",
+    "size_bytes": 12582856,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
+  },
+  {
+    "author": "Acrym48",
+    "name": "Chimera Linux - Desktop (dinit)",
+    "distro": "Chimera Linux",
+    "description": "Chimera Linux ARM64 with musl libc, native dinit init, and XFCE4 desktop. CLI + GUI.",
+    "architecture": "aarch64",
+    "file": "Chimera-Desktop-dinit",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Chimera-Desktop-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "15e53744b95adf699a3d5f135054b3738976cea91f0cbc8c12edeabef6bb1ad6",
+    "size_bytes": 327532948,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
   },
   {
     "author": "Acrym48",
@@ -19,11 +45,24 @@
     "description": "Minimal Chimera Linux ARM64 with musl libc, FreeBSD userland and native dinit init. CLI only.",
     "architecture": "aarch64",
     "file": "Chimera-Minimal-dinit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-222022/Chimera-Minimal-dinit-Droidspaces-rootfs-aarch64-20261124-v20261124-222022.tar.xz",
-    "sha256": "974537ab16c1d2fc3356db735808e574051c30f15a79c4f9b0879334ca4974e4",
-    "size_bytes": 19516164,
-    "version": "v20261124-222022",
-    "build_date": "20261124"
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Chimera-Minimal-dinit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "8ee1ba014f7a4c0590ba3325150fe82c92b3815ffbd59ff0f1a8b67c7337ec44",
+    "size_bytes": 19509948,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
+  },
+  {
+    "author": "Acrym48",
+    "name": "Void Linux - Desktop (runit)",
+    "distro": "Void Linux",
+    "description": "Void Linux ARM64 with glibc, native runit init, and XFCE4 desktop. CLI + GUI.",
+    "architecture": "aarch64",
+    "file": "Void-Desktop-runit",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "4cf4c14eb82a0fc01c4e382dbe4f5680706156904309c47ea5c320a97940fbf6",
+    "size_bytes": 299953752,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
   },
   {
     "author": "Acrym48",
@@ -32,11 +71,24 @@
     "description": "Minimal Void Linux ARM64 with glibc and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-222022/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-222022.tar.xz",
-    "sha256": "220764145da0bd1c559c3921dfe11656c6395b9b8734d69cefeadade656c1543",
-    "size_bytes": 64804176,
-    "version": "v20261124-222022",
-    "build_date": "20261124"
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "ef378107e39e44b8c6314e2dd1dc8cbcd8a4c0f9aa733220774c62ed1221c71a",
+    "size_bytes": 64802512,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
+  },
+  {
+    "author": "Acrym48",
+    "name": "Void Linux musl - Desktop (runit)",
+    "distro": "Void Linux",
+    "description": "Void Linux ARM64 with musl libc, native runit init, and XFCE4 desktop. CLI + GUI.",
+    "architecture": "aarch64",
+    "file": "Void-musl-Desktop-runit",
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-musl-Desktop-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "453c68f11592454eb69e7477791659562fe21859f4897ccaec391f7093a2dbed",
+    "size_bytes": 289859976,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
   },
   {
     "author": "Acrym48",
@@ -45,10 +97,10 @@
     "description": "Minimal Void Linux ARM64 with musl and native runit init. CLI only.",
     "architecture": "aarch64",
     "file": "Void-musl-Minimal-runit",
-    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261124-222022/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261124-v20261124-222022.tar.xz",
-    "sha256": "aae816699018414c1dfe700dcb869b5e6c418f7ea3d2e6400f0fa6ee36048f58",
-    "size_bytes": 54298080,
-    "version": "v20261124-222022",
-    "build_date": "20261124"
+    "download_url": "https://github.com/Acrym48/Droidspaces-NonSystemd-rootfs-builder/releases/download/v20261125-081235/Void-musl-Minimal-runit-Droidspaces-rootfs-aarch64-20261125-v20261125-081235.tar.xz",
+    "sha256": "e5b106b5074f32e0ed566ebad0b8d8e182965b1b08f1b0e556dd0fd567726d34",
+    "size_bytes": 54292680,
+    "version": "v20261125-081235",
+    "build_date": "20261125"
   }
 ]
