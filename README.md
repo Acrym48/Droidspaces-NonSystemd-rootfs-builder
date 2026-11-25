@@ -19,6 +19,7 @@ with **runit**, Chimera Linux with **dinit** and Adélie Linux with **OpenRC**. 
 | `Void-musl-Desktop-runit` | aarch64 | musl | runit | XFCE4 desktop |
 | `Chimera-Desktop-dinit` | aarch64 | musl | dinit | XFCE4 desktop |
 | `Adelie-Desktop-openrc` | aarch64 | musl | OpenRC | XFCE4 desktop |
+| `Alpine-Desktop-openrc` | aarch64 | musl | OpenRC | XFCE4 desktop |
 
 The Void templates are bootstrapped from the official Void Linux ROOTFS tarball, updated
 with `xbps`, and include `base-system` plus a small CLI toolset (bash, curl, wget, nano,
@@ -71,6 +72,16 @@ not have. As a symlink it is classified as an unknown init and stopped with SIGT
   (`/run/initctl`) for a graceful stop.
 - The `ds-dhcp` service starts `dhcpcd -B` only when `net_mode` in
   `/run/droidspaces/container.config` is not `host` or `none`.
+
+### Alpine Linux (OpenRC)
+
+- Alpine uses OpenRC natively. The template follows the official upstream Alpine minimal
+  template (container-aware dhcpcd, `rc_sys="lxc"`, console getty).
+- Service definitions live in `/etc/init.d`; enabled via `/etc/runlevels/`.
+- Manage services with `rc-service <name> start|stop|restart` and `rc-update add <name> default`.
+- The dhcpcd init script is container-aware (`--nodev`, `allowinterfaces eth*`,
+  skips host/none network modes).
+- XFCE autostart runs via an OpenRC service that waits for the X11 socket.
 
 ### Networking
 
@@ -152,6 +163,7 @@ for that arch.
 ./build.sh -a aarch64 -i Void-Desktop-runit
 ./build.sh -a aarch64 -i Void-musl-Desktop-runit
 ./build.sh -a aarch64 -i Chimera-Desktop-dinit
+./build.sh -a aarch64 -i Alpine-Desktop-openrc
 ```
 
 Needs docker with buildx, jq, and xz. QEMU is registered automatically when the host cannot
