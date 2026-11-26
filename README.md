@@ -22,7 +22,9 @@ with **runit**, Chimera Linux with **dinit** and Adélie Linux with **OpenRC**. 
 | `Alpine-Desktop-openrc` | aarch64 | musl | OpenRC | XFCE4 desktop |
 | `Devuan-Minimal-openrc` | aarch64 | glibc | OpenRC | CLI only |
 | `Devuan-Desktop-openrc` | aarch64 | glibc | OpenRC | XFCE4 desktop |
+| `Devuan-Minimal-runit` | aarch64 | glibc | runit | CLI only |
 | `Devuan-Desktop-runit` | aarch64 | glibc | runit | XFCE4 desktop |
+| `Devuan-Minimal-sysvinit` | aarch64 | glibc | sysvinit | CLI only |
 | `Devuan-Desktop-sysvinit` | aarch64 | glibc | sysvinit | XFCE4 desktop |
 
 The Void templates are bootstrapped from the official Void Linux ROOTFS tarball, updated
