@@ -13,11 +13,12 @@ with **runit**, Chimera Linux with **dinit** and Adélie Linux with **OpenRC**. 
 | Template | Arch | Libc | Init | Notes |
 | --- | --- | --- | --- | --- |
 | `Void-Minimal-runit` | aarch64 | glibc | runit | CLI only |
-| `Void-musl-Minimal-runit` | aarch64 | musl | runit | CLI only |
-| `Chimera-Minimal-dinit` | aarch64 | musl | dinit | CLI only, FreeBSD userland |
 | `Void-Desktop-runit` | aarch64 | glibc | runit | XFCE4 desktop |
+| `Void-musl-Minimal-runit` | aarch64 | musl | runit | CLI only |
 | `Void-musl-Desktop-runit` | aarch64 | musl | runit | XFCE4 desktop |
+| `Chimera-Minimal-dinit` | aarch64 | musl | dinit | CLI only, FreeBSD userland |
 | `Chimera-Desktop-dinit` | aarch64 | musl | dinit | XFCE4 desktop |
+| `Adelie-Minimal-openrc` | aarch64 | musl | OpenRC | CLI only |
 | `Adelie-Desktop-openrc` | aarch64 | musl | OpenRC | XFCE4 desktop |
 | `Alpine-Desktop-openrc` | aarch64 | musl | OpenRC | XFCE4 desktop |
 | `Devuan-Minimal-openrc` | aarch64 | glibc | OpenRC | CLI only |

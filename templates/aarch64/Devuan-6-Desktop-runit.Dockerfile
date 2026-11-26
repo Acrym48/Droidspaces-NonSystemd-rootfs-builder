@@ -19,6 +19,7 @@ COPY scripts/bashrc.sh /etc/profile.d/ds-aliases.sh
 RUN chmod +x /usr/local/bin/download-firmware /etc/profile.d/ds-aliases.sh
 
 # Main installation layer (Minimal + CLI + GUI + runit)
+RUN printf '#!/bin/sh\nexit 101\n' > /usr/sbin/policy-rc.d && chmod +x /usr/sbin/policy-rc.d
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     # Init: runit + runit-init
