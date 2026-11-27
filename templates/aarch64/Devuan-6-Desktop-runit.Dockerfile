@@ -299,7 +299,8 @@ EOT
 chmod +x /etc/sv/ds-dhcp/run
 
 # Enable core services in default runsvdir
-for svc in ds-udev dbus sshd ds-dhcp; do
+# ds-udev is deliberately not enabled: udev must not coldplug Android devices.
+for svc in dbus sshd ds-dhcp; do
     ln -sfn "/etc/sv/$svc" "/etc/runit/runsvdir/default/$svc"
 done
 

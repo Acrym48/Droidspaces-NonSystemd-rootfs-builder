@@ -346,7 +346,9 @@ rc-update del udev-trigger sysinit 2>/dev/null || true
 rc-update del eudev sysinit 2>/dev/null || true
 rc-update del eudev boot 2>/dev/null || true
 rc-update del eudev-trigger sysinit 2>/dev/null || true
-rc-update add ds-udev sysinit
+# udev is disabled entirely in containers: it can coldplug Android's block and
+# network devices. Keep the service file for reference but never enable it.
+rc-update del ds-udev sysinit 2>/dev/null || true
 rc-update add dbus default || true
 rc-update add ssh default || true
 rc-update add ds-dhcp default

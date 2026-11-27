@@ -236,7 +236,8 @@ update-rc.d -f udev-trigger remove >/dev/null 2>&1 || true
 update-rc.d -f eudev remove >/dev/null 2>&1 || true
 update-rc.d -f eudev-trigger remove >/dev/null 2>&1 || true
 
-update-rc.d ds-udev start 04 S . stop 04 0 6 . >/dev/null 2>&1 || true
+# udev is not used in a container; coldplugging Android hardware is unsafe.
+update-rc.d -f ds-udev remove >/dev/null 2>&1 || true
 update-rc.d dbus defaults >/dev/null 2>&1 || true
 update-rc.d ssh defaults >/dev/null 2>&1 || true
 update-rc.d ds-dhcp defaults >/dev/null 2>&1 || true

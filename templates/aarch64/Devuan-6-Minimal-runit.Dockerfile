@@ -246,7 +246,9 @@ EOT
 chmod +x /etc/sv/ds-dhcp/run /etc/sv/ds-dhcp/finish
 
 # Enable services via /etc/service symlinks
-ln -sfn /etc/sv/ds-udev /etc/service/ds-udev
+# udev is disabled entirely: host /dev is already available with hw-access and
+# coldplugging Android block devices can crash the phone.
+rm -f /etc/service/ds-udev
 ln -sfn /etc/sv/dbus /etc/service/dbus
 ln -sfn /etc/sv/sshd /etc/service/sshd
 ln -sfn /etc/sv/ds-dhcp /etc/service/ds-dhcp

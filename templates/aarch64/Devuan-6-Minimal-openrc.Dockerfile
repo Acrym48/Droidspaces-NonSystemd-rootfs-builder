@@ -148,6 +148,13 @@ host_net() {
     grep -q '^net_mode=host$' /run/droidspaces/container.config 2>/dev/null
 }
 
+# Droidspaces writes rootfs_path=<path>; an ext4 image ends in .img (or is a
+# block device).  A plain directory on Android's /data gets a generic SELinux
+# label, and udev coldplugging block devices there can break the phone.
+sparse_image() {
+    grep -qE '^rootfs_path=.*(\.img|/dev/block/)' /run/droidspaces/container.config 2>/dev/null
+}
+
 start() {
     # udev is only useful when hardware access is on. In host network mode it
     # must not run at all: the container shares the phone's network namespace,
@@ -155,6 +162,10 @@ start() {
     # interfaces even without an explicit coldplug.
     if host_net; then
         einfo "Host network mode, skipping udev to leave host networking alone"
+        return 0
+    fi
+    if ! sparse_image; then
+        einfo "Directory rootfs on Android, skipping udev to avoid touching host storage"
         return 0
     fi
     if ! hw_access; then
@@ -233,7 +244,10 @@ rc-update del udev-trigger sysinit 2>/dev/null || true
 rc-update del eudev sysinit 2>/dev/null || true
 rc-update del eudev boot 2>/dev/null || true
 rc-update del eudev-trigger sysinit 2>/dev/null || true
-rc-update add ds-udev sysinit
+# udev is disabled entirely in containers: Droidspaces either mounts the host
+# /dev or uses a sparse ext4 image. Coldplugging block/net devices can break
+# Android. Keep the service file for reference but never enable it.
+rc-update del ds-udev sysinit 2>/dev/null || true
 rc-update add dbus default || true
 rc-update add ssh default || true
 rc-update add ds-dhcp default

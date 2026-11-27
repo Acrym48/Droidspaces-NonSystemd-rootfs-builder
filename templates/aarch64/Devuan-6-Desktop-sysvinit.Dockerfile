@@ -368,7 +368,8 @@ chmod +x /etc/init.d/ds-dhcp
 # --- 5. Enable essential SysV services ---
 update-rc.d -f udev remove >/dev/null 2>&1 || true
 update-rc.d -f eudev remove >/dev/null 2>&1 || true
-update-rc.d ds-udev start 04 S . >/dev/null 2>&1 || true
+# udev is not used in a container; coldplugging Android hardware is unsafe.
+update-rc.d -f ds-udev remove >/dev/null 2>&1 || true
 update-rc.d dbus defaults >/dev/null 2>&1 || true
 update-rc.d ssh defaults >/dev/null 2>&1 || true
 update-rc.d ds-dhcp defaults >/dev/null 2>&1 || true
